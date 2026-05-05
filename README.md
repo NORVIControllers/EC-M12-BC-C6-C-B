@@ -91,8 +91,7 @@ The EC-M12-BC-C6-C-B includes an RS485 communication interface designed for reli
 - NB-IoT connectivity  
 - Battery-powered operation (IP67 enclosure)  
 - Ultra-low power consumption  
-- Multiple sensor and digital I/O interfaces  
-
+  
 ---
 
 ## 📧 Support  
