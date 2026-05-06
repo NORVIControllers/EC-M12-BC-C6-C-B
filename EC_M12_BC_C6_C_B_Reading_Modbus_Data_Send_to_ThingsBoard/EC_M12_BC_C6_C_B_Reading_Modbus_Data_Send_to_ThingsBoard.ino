@@ -90,6 +90,8 @@ uint32_t lastReconnectAttempt = 0;
 
 #define BOOST_EN PA4
 
+#define BAT_VOL PB1
+
 // SD Paramerters
 #define SD_chipSelect PB0
 Sd2Card card;
@@ -102,13 +104,9 @@ TwoWire Wire2(SDA_PIN, SCL_PIN);
 HardwareSerial Serial1(RS485_RX, RS485_TX);
 HardwareSerial Serial2(GSM_RX, GSM_TX);
 
-STM32RTC &rtc = STM32RTC::getInstance();
-char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
-
-Adafruit_ADS1115 ads1;
-#define VOLTAGE_DIVIDER_RATIO 0.5
-const float mA_Factor = 4.3115789 / 3269.826;
+#define BATTERY_SCALE 3.06 ;
+uint8_t mqttRetryCount = 0;
 
 ModbusMaster node;
 
@@ -122,41 +120,6 @@ void postTransmission()
   digitalWrite(FC, 0);
 }
 
-uint8_t monthFromString(const char *mon) {
-  if (strncmp(mon, "Jan", 3) == 0) return 1;
-  if (strncmp(mon, "Feb", 3) == 0) return 2;
-  if (strncmp(mon, "Mar", 3) == 0) return 3;
-  if (strncmp(mon, "Apr", 3) == 0) return 4;
-  if (strncmp(mon, "May", 3) == 0) return 5;
-  if (strncmp(mon, "Jun", 3) == 0) return 6;
-  if (strncmp(mon, "Jul", 3) == 0) return 7;
-  if (strncmp(mon, "Aug", 3) == 0) return 8;
-  if (strncmp(mon, "Sep", 3) == 0) return 9;
-  if (strncmp(mon, "Oct", 3) == 0) return 10;
-  if (strncmp(mon, "Nov", 3) == 0) return 11;
-  if (strncmp(mon, "Dec", 3) == 0) return 12;
-  return 1;
-}
-
-uint8_t dayOfWeekFromDate(uint16_t year, uint8_t month, uint8_t day) {
-  if (month < 3) {
-    month += 12;
-    year--;
-  }
-  uint16_t k = year % 100;
-  uint16_t j = year / 100;
-  uint8_t h = (day + ((13 * (month + 1)) / 5) + k + (k / 4) + (j / 4) + (5 * j)) % 7;
-  return (h + 6) % 7;
-}
-
-void parseBuildDateTime(uint16_t &year, uint8_t &month, uint8_t &day, uint8_t &hour, uint8_t &minute, uint8_t &second) {
-  month = monthFromString(__DATE__);
-  day = (uint8_t)atoi(__DATE__ + 4);
-  year = (uint16_t)atoi(__DATE__ + 7);
-  hour = (uint8_t)atoi(__TIME__);
-  minute = (uint8_t)atoi(__TIME__ + 3);
-  second = (uint8_t)atoi(__TIME__ + 6);
-}
 
 boolean mqttConnect() {
   SerialMon.print("Connecting to ThingsBoard MQTT... ");
@@ -281,6 +244,9 @@ void setup() {
   pinMode(GSM_POWER, OUTPUT);
   pinMode(DTR_PIN, OUTPUT);
   pinMode(BOOST_EN, OUTPUT);
+  pinMode(BAT_VOL, INPUT_ANALOG);
+  analogReadResolution(12);
+  delay(200);
   Serial.println("Hello...");
   delay(500);
 
@@ -315,20 +281,6 @@ void setup() {
 
   Wire2.begin();
   delay(1000);
-  I2C_SCAN();
-  delay(1000);
-
-  if (!ads1.begin(0x49)) {
-    Serial.println("Failed to initialize ADS 1 .");
-    while (1);
-  }
-  ads1.setGain(GAIN_ONE);  // 1x gain +/- 4.096V  (1 bit = 0.125mV)
-
-  RTC_Check();
-  delay(1000);
-
-  SD_CHECK();
-  delay(1000);
 
 }
 
@@ -336,6 +288,11 @@ void loop() {
   Serial.println("System is awake!");
   digitalWrite(BOOST_EN, HIGH);     // Enable RS485 / INA196 / Booster
   delay(5000);
+
+  float battery = readBatteryVoltage();
+
+  Serial.print("Battery Voltage: ");
+  Serial.println(battery);
 
   // Make sure we're still registered on the network
   if (!modem.isNetworkConnected()) {
@@ -373,13 +330,39 @@ void loop() {
     uint32_t t = millis();
     if (t - lastReconnectAttempt > 10000L) {
       lastReconnectAttempt = t;
-      if (mqttConnect()) {
-        lastReconnectAttempt = 0;
+    if (mqttConnect()) {
+      SerialMon.println("MQTT Connected");
+      lastReconnectAttempt = 0;
+      mqttRetryCount = 0; 
+    } else {
+      mqttRetryCount++;   
+      SerialMon.print("MQTT Retry Count: ");
+      SerialMon.println(mqttRetryCount);
+
+      if (mqttRetryCount >= 3) {
+        SerialMon.println("MQTT FAILED 3 TIMES -> GOING TO SHUTDOWN");
+
+        // Cleanup before shutdown
+        SPI.end();
+        delay(1000);
+        Wire2.end();
+        delay(1000);
+
+        digitalWrite(BOOST_EN, LOW);
+        delay(1000);
+
+        if (!PowerOffModem_WithVerify()) {
+          Serial.println("Warning: Modem still ON before shutdown");
+        }
+
+        LowPower.shutdown(900000);   // Sleep 15 minutes
       }
     }
-    delay(100);
-    return;
   }
+
+  delay(100);
+  return;
+}
 
   mqtt.loop();
 
@@ -405,6 +388,7 @@ void loop() {
   StaticJsonDocument<200> doc;
   doc["Temperature"] = temperature;
   doc["Humidity"] = humidity;
+  doc["Battery"] =  battery;
 
   String jsonString;
   serializeJson(doc, jsonString);
@@ -434,6 +418,29 @@ void loop() {
   LowPower.shutdown(900000);
 
 
+}
+
+float readBatteryVoltage()
+{
+  const int samples = 10;
+  long sum = 0;
+
+  for (int i = 0; i < samples; i++) {
+    analogRead(BAT_VOL);   // dummy read for STM32 ADC stability
+    delay(2);
+    sum += analogRead(BAT_VOL);
+    delay(2);
+  }
+
+  float raw = sum / (float)samples;
+
+  float vref = 3.3;
+  float adcMax = 4095.0;
+
+  float pinVoltage = (raw / adcMax) * vref;
+
+  // final calibrated output
+  return pinVoltage * BATTERY_SCALE;
 }
 
 void Modem_Init() {
@@ -489,117 +496,4 @@ void Modem_Init() {
   }
 #endif
 
-}
-
-void displayTime(void) {
-  uint8_t day = rtc.getDay();
-  uint8_t month = rtc.getMonth();
-  uint16_t year = 2000 + rtc.getYear();
-  uint8_t weekDay = rtc.getWeekDay();
-
-  if (weekDay > 6) {
-    weekDay = dayOfWeekFromDate(year, month, day);
-  }
-
-  Serial.print(year, DEC);
-  Serial.print('/');
-  Serial.print(month, DEC);
-  Serial.print('/');
-  Serial.print(day, DEC);
-  Serial.print(" ");
-  Serial.print(daysOfTheWeek[weekDay]);
-
-  Serial.print(rtc.getHours(), DEC);
-  Serial.print(':');
-  Serial.print(rtc.getMinutes(), DEC);
-  Serial.print(':');
-  Serial.print(rtc.getSeconds(), DEC);
-  Serial.println();
-  delay(1000);
-
-}
-
-void RTC_Check(){
-  rtc.setClockSource(STM32RTC::LSE_CLOCK);
-  rtc.begin();
-  
-  bool rtcLooksUninitialized =
-      (rtc.getMonth() == 1) &&
-      (rtc.getDay() == 1) &&
-      (rtc.getYear() <= 1) &&
-      (rtc.getHours() == 0) &&
-      (rtc.getMinutes() == 0);
-
-  if (rtcLooksUninitialized) {
-    rtc.setDate(3, 25, 3, 26);  
-    rtc.setTime(10, 56, 0);     
-    Serial.println("Internal RTC was not set, initialized to fixed startup date/time.");
-  }
-
-  int a = 1;
-  while (a < 6) {
-    displayTime();   // printing time function for serial
-    a = a + 1;
-  }
-}
-
-void SD_CHECK() {
-  Serial.print("\nInitializing SD card...");
-  if (!card.init(SPI_HALF_SPEED, SD_chipSelect))
-  { Serial.println("CARD NOT FOUND");
-  }
-  else
-  {
-    Serial.println("SD WORKING");
-  }
-
-  Serial.print("\nCard type: ");
-  Serial.println(card.type());
-  if (!volume.init(card)) {
-    Serial.println("Could not find FAT16/FAT32 partition.\nMake sure you've formatted the card");
-    return;
-  }
-  if (!SD.begin(SD_chipSelect)) {
-    Serial.println("Card failed, or not present");
-    // don't do anything more:
-    return;
-  }
-}
-
-void I2C_SCAN() {
-  byte error, address;
-  int deviceCount = 0;
-
-  Serial.println("Scanning...");
-
-  for (address = 1; address < 127; address++) {
-    Wire2.beginTransmission(address);
-    error = Wire2.endTransmission();
-
-    if (error == 0) {
-      Serial.print("I2C device found at address 0x");
-      if (address < 16) {
-        Serial.print("0");
-      }
-      Serial.print(address, HEX);
-      Serial.println("  !");
-
-      deviceCount++;
-      delay(1);  // Wait for a moment to avoid overloading the I2C bus
-    }
-    else if (error == 4) {
-      Serial.print("Unknown error at address 0x");
-      if (address < 16) {
-        Serial.print("0");
-      }
-      Serial.println(address, HEX);
-    }
-  }
-
-  if (deviceCount == 0) {
-    Serial.println("No I2C devices found\n");
-  }
-  else {
-    Serial.println("Scanning complete\n");
-  }
 }
