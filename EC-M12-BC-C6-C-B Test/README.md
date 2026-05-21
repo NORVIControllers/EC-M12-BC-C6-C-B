@@ -59,7 +59,7 @@ Follow the steps below to run the example.
    - Locate the generated **.bin** file inside the sketch folder and copy its file location/path.
    - Open the STM32 ST-LINK Utility application.
 
-      download the STM32 ST-LINK Utility software from the below link and install it.
+     download the STM32 ST-LINK Utility software from the below link and install it.
 
      https://www.st.com/en/development-tools/stsw-link004.html
 
@@ -67,5 +67,27 @@ Follow the steps below to run the example.
 
     ![CONNECT](Images/CONNECT.png)
 
+    In the STM32 ST-LINK Utility, connect to the target device.
 
+    Go to:
+    
+      **Target → Program**
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
