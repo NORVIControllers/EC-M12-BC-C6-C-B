@@ -52,11 +52,18 @@ Follow the steps below to run the example.
    
    **Sketch** **→** **Show Sketch Folder**
 
-   
+   ![SHOW BINARY](Images/SHOW_BINARY.png)
 
+   The sketch folder will open, and the generated **.bin** file can be found inside the folder. 
 
+   - Locate the generated **.bin** file inside the sketch folder and copy its file location/path.
+   - Open the STM32 ST-LINK Utility application.
 
+      download the STM32 ST-LINK Utility software from the below link and install it.
+      https://www.st.com/en/development-tools/stsw-link004.html
 
+  - Connect the **STM32 board** to the **ST-Link programmer**.
+ 
 
 
 
