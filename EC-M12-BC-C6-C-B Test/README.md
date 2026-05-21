@@ -44,6 +44,7 @@ Follow the steps below to run the example.
 
    **Sketch** **→** **Export Compiled Binary**
 
+   ![BINARY](Images/BINARY.png)
 
 
 
