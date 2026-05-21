@@ -1,1 +1,51 @@
+# EC-M12-BC-C6-C-B Test Procedure
+
+## Overview
+The **EC-M12-BC-C6-C-B** is a rugged, IP67-rated IoT telemetry device designed for reliable remote monitoring and industrial data collection. Powered by an ultra-low-power **STM32L072CZT6 MCU** and high-capacity lithium batteries, it supports long-term autonomous operation, cellular connectivity, and RS-485 integration for industrial and environmental applications. 
+
+##Product Used
+
+Product: EC-M12-BC-C6-C-B
+
+More information:
+https://norvi.io 
+
+## Purpose of This Example 
+This example shows how to: 
+- Initialize and configure the EC-M12-BC-C6-C-B controller 
+- Read sensor data through the RS-485 Modbus interface 
+- Connect to the cellular network using the SIM7600 module 
+- Publish sensor values to an MQTT/ThingsBoard server 
+- Implement low-power operation using shutdown and wake-up control 
+
+## What the User Should Do
+
+Follow the steps below to run the example.
+1.  Hardware Connections
+- Open the lid of the **EC-M12-BC-C6-C-B** device carefully.
+- Change the power supply selection to the **12V side**, since the hydrostatic sensor requires a 12V supply.
+- Set the jumper to the **USB programming side**.
+- Connect a **Mini USB cable** to the device.
+- Carefully connect the **programming header** to the **ST-Link programmer**.
+- Move to the **8-pin M8 connector** section.
+- Connect the **8-pin M8 cable** to the device.
+- Connect the other end of the M8 cable to the **hydrostatic sensor**.
+- Place the hydrostatic sensor inside the tank for level measurement.
+      
+2.   Program Upload procedure
+
+   - Follow this guide to program the STM32 board.
+   - Open the EC-M12-BC-C6-C-B test program using Arduino IDE 1.8.19.
+   - Go to Tools and configure the settings as shown below.
+
+     Images/TOOLS.png
+
+
+
+
+
+
+
+
+
 
