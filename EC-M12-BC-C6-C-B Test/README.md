@@ -76,8 +76,23 @@ Follow the steps below to run the example.
       **Target → Program**
     
       ![PROGRAM](Images/PROGRAM.png)
+
+     Browse and select the generated **.bin** file location.
+
+     Confirm the start address if required, then click **Start** to program the STM32 board.
+
+     Wait until the programming process is completed successfully.
+
+     ![Start](Images/start.png)
     
-      
+    Go back to the Arduino IDE and check that the correct **COM port** is selected.
+
+    Open the **Serial Monitor**.
+
+    You can now see the sensor raw values displayed in the Serial Monitor output
+
+    
+
 
 
 
