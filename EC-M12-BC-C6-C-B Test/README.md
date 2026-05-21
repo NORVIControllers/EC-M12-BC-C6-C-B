@@ -21,7 +21,7 @@ This example shows how to:
 ## What the User Should Do
 
 Follow the steps below to run the example.
-1.  Hardware Connections
+1.  **Hardware Connections**
 - Open the lid of the **EC-M12-BC-C6-C-B** device carefully.
 - Change the power supply selection to the **12V side**, since the hydrostatic sensor requires a 12V supply.
 - Set the jumper to the **USB programming side**.
@@ -32,13 +32,17 @@ Follow the steps below to run the example.
 - Connect the other end of the M8 cable to the **hydrostatic sensor**.
 - Place the hydrostatic sensor inside the tank for level measurement.
       
-2.   Program Upload procedure
+2.  **Program Upload procedure**
 
    - Follow this guide to program the STM32 board.
-   - Open the EC-M12-BC-C6-C-B test program using Arduino IDE 1.8.19.
+   - Open the EC-M12-BC-C6-C-B Functional test program using Arduino IDE 1.8.19.
    - Go to Tools and configure the settings as shown below.
 
-     Images/TOOLS.png
+   ![TOOLS](Images/TOOLS.png)
+
+   Generate the binary file for the project:
+
+   **Sketch** **→** **Export Compiled Binary**
 
 
 
