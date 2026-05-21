@@ -46,7 +46,13 @@ Follow the steps below to run the example.
 
    ![BINARY](Images/BINARY.png)
 
+   After compilation is completed, the generated **.bin** file will be available inside the project folder.
 
+   Open the project folder to view the generated binary files: 
+   
+   **Sketch** **→** **Show Sketch Folder**
+
+   
 
 
 
