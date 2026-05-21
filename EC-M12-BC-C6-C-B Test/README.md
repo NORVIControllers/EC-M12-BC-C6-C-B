@@ -67,6 +67,8 @@ Follow the steps below to run the example.
 
     ![CONNECT](Images/CONNECT.png)
 
+    ![AFTER CONNECTED](Images/AFTER_CONNECTED.png)
+
     In the STM32 ST-LINK Utility, connect to the target device.
 
     Go to:
