@@ -92,11 +92,13 @@ This example shows how to:
 
      ## What the User Should Expect as a Result
 
-     **When the program runs successfully:**
+     ### **When the program runs successfully:**
 
-      - The message will be sent from the right-side serial monitor.
-      - The same message can be seen as received on the left-side serial monitor.
-      - This confirms successful RS-485 data communication between the devices.
+     Data transmission is performed through the right-side serial monitor (RS-485 send interface), where messages are sent via the RS-485 to USB converter.
+
+     The same transmitted data is received and displayed on the left-side device serial monitor, which represents the EC-M12-BC-C6-C-B internal serial output.
+
+     This behavior confirms that RS-485 communication is successfully established, ensuring proper data exchange between the connected devices.
 
      ![beforesending](Images/beforesending.png)
 
