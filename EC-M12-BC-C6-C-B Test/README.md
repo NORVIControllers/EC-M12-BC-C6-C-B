@@ -84,11 +84,11 @@ Follow the steps below to run the example.
 
      ![Start](Images/start.png)
     
-    Go back to the Arduino IDE and check that the correct **COM port** is selected.
+     Now go back to the **Arduino IDE** and verify that the correct **COM port** is selected.
 
-    Open the **Serial Monitor**.
+     Open the Serial Monitor, then open another serial monitor and select the STM board COM port to monitor the communication data, as shown below.
 
-    You can now see the sensor raw values displayed in the Serial Monitor output
+     ![RS485](Images/RS485.png)
 
     
 
