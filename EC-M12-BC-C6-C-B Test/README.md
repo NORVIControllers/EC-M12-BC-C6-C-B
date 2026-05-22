@@ -23,14 +23,13 @@ This example shows how to:
 Follow the steps below to run the example.
 1.  **Hardware Connections**
 - Open the lid of the **EC-M12-BC-C6-C-B** device carefully.
-- Change the power supply selection to the **12V side**, since the hydrostatic sensor requires a 12V supply.
 - Set the jumper to the **USB programming side**.
 - Connect a **Mini USB cable** to the device.
 - Carefully connect the **programming header** to the **ST-Link programmer**.
 - Move to the **8-pin M8 connector** section.
 - Connect the **8-pin M8 cable** to the device.
-- Connect the other end of the M8 cable to the **hydrostatic sensor**.
-- Place the hydrostatic sensor inside the tank for level measurement.
+- Connect the 8-pin M8 cable and interface it with the **RS-485 converter**.
+- Connect the pink wire of the M8 cable to RS-485 B, and connect the gray wire to RS-485 A carefully.
       
 2.  **Program Upload procedure**
 
