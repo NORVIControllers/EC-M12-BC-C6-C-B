@@ -3,7 +3,7 @@
 ## Overview
 The **EC-M12-BC-C6-C-B** is a rugged, IP67-rated IoT telemetry device designed for reliable remote monitoring and industrial data collection. Powered by an ultra-low-power **STM32L072CZT6 MCU** and high-capacity lithium batteries, it supports long-term autonomous operation, cellular connectivity, and RS-485 integration for industrial and environmental applications. 
 
-##Product Used
+## Product Used
 
 Product: EC-M12-BC-C6-C-B
 
@@ -90,7 +90,7 @@ Follow the steps below to run the example.
 
      ![RS485](Images/RS485.png)
 
-     #What the User Should Expect as a Result
+     ## What the User Should Expect as a Result
 
      **When the program runs successfully:**
 
@@ -98,7 +98,70 @@ Follow the steps below to run the example.
       - The same message can be seen as received on the left-side serial monitor.
       - This confirms successful RS-485 data communication between the devices.
 
-     ![RS485](Images/RS485.png)              ![RS485](Images/RS485.png)
+     ![beforesending](Images/beforesending.png)
+
+     ![SEND](Images/SEND.png)
+
+    ## Device Preparation / Configuration
+    - Check that the USB-side jumper is connected correctly.
+    - Ensure the ST-LINK programming header is connected properly before programming the device.
+    - Check that the 8-pin M8 connector cable is connected properly.
+    - Verify that the RS-485 communication wiring is correct and secure.
+
+    ## Required Libraries
+    Install the following libraries before compiling
+
+    I2C Devices → Wire.h
+    RS485 UART → HardwareSerial
+    GSM UART → HardwareSerial
+    SD Card via SPI → SPI.h + SD.h
+    GPIO / ADC / Serial Monitor → Arduino.h
+
+     ### Installation:
+            1. Open Arduino IDE
+            2. Go to Library Manager
+            3. Search and install the required libraries
+
+    ## Limitations
+    
+      • This example is provided for demonstration purposes.
+      • Additional calibration may be required for precise measurements.
+      • Performance may depend on sensor accuracy and environmental conditions.
+
+    ## Safety Notes
+    
+      • Do not exceed the rated input voltage
+      • Ensure proper grounding
+      • Incorrect wiring may damage the controller
+    
+    ## Tested Hardware
+
+    Controller: NORVI EC-M12-BC-C6-C-B
+ 
+      Test Date: [2026-05-21]
+    
+      Verified By:Kaveesha
+      
+      Support
+
+      Documentation:
+
+      https://norvi.io
+ 
+      For additional support or inquiries, contact the NORVI support team.
+
+    ## License
+
+      This example is provided for development and educational purposes.
+
+
+    
+
+
+    
+
+
+     
     
     
 
