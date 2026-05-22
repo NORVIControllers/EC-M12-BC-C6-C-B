@@ -19,7 +19,7 @@ This example shows how to:
 
 ## What the User Should Do
 
-Follow the steps below to run the example.
+### Follow the steps below to run the example.
 ## 1.  **Hardware Connections**
 
    The **EC-M12-BC-C6-C-B** device hardware setup starts with safe access to the internal system. Open the device enclosure lid carefully to avoid any damage to internal          components or wiring.
@@ -83,7 +83,10 @@ Follow the steps below to run the example.
     
      Now go back to the **Arduino IDE** and verify that the correct **COM port** is selected.
 
-     Open the Serial Monitor, then open another serial monitor and select the STM board COM port to monitor the communication data, as shown below.
+     The left-side serial monitor represents the device serial interface, used for viewing the real-time debugoutput and internal communication logs
+     from the EC-M12-BC-C6-C-B system.
+
+    The right-side serial monitor represents the RS-485 to USB converter serial interface, which is used to observe the incoming and outgoing RS-485 communication data between     the device and external systems.
 
      ![RS485](Images/RS485.png)
 
