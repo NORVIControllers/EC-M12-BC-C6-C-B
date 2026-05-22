@@ -27,7 +27,7 @@ Follow the steps below to run the example.
 - Carefully connect the **programming header** to the **ST-Link programmer**.
 - Move to the **8-pin M8 connector** section.
 - Connect the **8-pin M8 cable** to the device.
-- Connect the 8-pin M8 cable and interface it with the **RS-485 converter**.
+- Connect the 8-pin M8 cable and interface it with the **RS-485 to USB converter**.
 - Connect the pink wire of the M8 cable to RS-485 B, and connect the gray wire to RS-485 A carefully.
       
 2.  **Program Upload procedure**
