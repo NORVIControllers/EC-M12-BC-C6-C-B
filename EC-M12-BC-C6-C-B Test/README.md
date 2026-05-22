@@ -20,17 +20,17 @@ This example shows how to:
 ## What the User Should Do
 
 Follow the steps below to run the example.
-1.  **Hardware Connections**
-- Open the lid of the **EC-M12-BC-C6-C-B** device carefully.
-- Set the jumper to the **USB programming side**.
-- Connect a **Mini USB cable** to the device.
-- Carefully connect the **programming header** to the **ST-Link programmer**.
-- Move to the **8-pin M8 connector** section.
-- Connect the **8-pin M8 cable** to the device.
-- Connect the 8-pin M8 cable and interface it with the **RS-485 to USB converter**.
-- Connect the pink wire of the M8 cable to RS-485 B, and connect the gray wire to RS-485 A carefully.
+## 1.  **Hardware Connections**
+
+   The **EC-M12-BC-C6-C-B** device hardware setup starts with safe access to the internal system. Open the device enclosure lid carefully to avoid any damage to internal          components or wiring.
+
+   Set the hardware jumper to the **USB programming mode** to enable firmware upload. Then connect a **Mini USB cable** to the device to establish communication with the         programming system.
+
+   For firmware flashing, securely connect the programming header to the ST-Link programmer. Ensure the connector is properly aligned and firmly attached before proceeding        with power or programming operations.
+
+   Next, move to the **8-pin M8 connector** section and connect the M8 cable to the device. Interface the cable with an RS-485 to USB converter, connecting the **pink**          wire to RS-485 B and the **gray** wire to RS-485 A for correct communication polarity.
       
-2.  **Program Upload procedure**
+ ## 3.  **Program Upload procedure**
 
    - Follow this guide to program the STM32 board.
    - Open the EC-M12-BC-C6-C-B Functional test program using Arduino IDE 1.8.19.
