@@ -8,7 +8,7 @@ The **EC-M12-BC-C6-C-B** is a rugged, IP67-rated IoT telemetry device designed f
 Product: EC-M12-BC-C6-C-B
 
 More information:
-https://norvi.io 
+[https://norvi.io ](https://norvi.io/docs-category/norvi-ec-m12/)
 
 ## Purpose of This Example 
 This example shows how to: 
