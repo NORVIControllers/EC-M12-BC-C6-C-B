@@ -109,12 +109,13 @@ Follow the steps below to run the example.
     - Verify that the RS-485 communication wiring is correct and secure.
 
     ## Required Libraries
+    
     Install the following libraries before compiling
 
     I2C Devices → Wire.h
-    RS485 UART → HardwareSerial
-    GSM UART → HardwareSerial
+
     SD Card via SPI → SPI.h + SD.h
+
     GPIO / ADC / Serial Monitor → Arduino.h
 
      ### Installation:
@@ -125,13 +126,17 @@ Follow the steps below to run the example.
     ## Limitations
     
       • This example is provided for demonstration purposes.
+    
       • Additional calibration may be required for precise measurements.
+    
       • Performance may depend on sensor accuracy and environmental conditions.
 
     ## Safety Notes
     
       • Do not exceed the rated input voltage
+    
       • Ensure proper grounding
+    
       • Incorrect wiring may damage the controller
     
     ## Tested Hardware
