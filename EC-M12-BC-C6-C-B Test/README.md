@@ -32,9 +32,7 @@ Follow the steps below to run the example.
       
  ## 3.  **Program Upload procedure**
 
-   - Follow this guide to program the STM32 board.
-   - Open the EC-M12-BC-C6-C-B Functional test program using Arduino IDE 1.8.19.
-   - Go to Tools and configure the settings as shown below.
+  Follow this guide to program the STM32 board by opening the EC-M12-BC-C6-C-B Functional Test Program in Arduino IDE 1.8.19. Then, navigate to the Tools menu and configure      all required settings such as the correct STM32 board type, upload method, and COM port according to the hardware connection. Ensure all parameters are properly selected       before uploading the firmware to avoid configuration or communication errors.
 
    ![TOOLS](Images/TOOLS.png)
 
