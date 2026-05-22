@@ -90,6 +90,16 @@ Follow the steps below to run the example.
 
      ![RS485](Images/RS485.png)
 
+     #What the User Should Expect as a Result
+
+     **When the program runs successfully:**
+
+      - The message will be sent from the right-side serial monitor.
+      - The same message can be seen as received on the left-side serial monitor.
+      - This confirms successful RS-485 data communication between the devices.
+
+     ![RS485](Images/RS485.png)              ![RS485](Images/RS485.png)
+    
     
 
 
