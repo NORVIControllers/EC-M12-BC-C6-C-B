@@ -14,8 +14,7 @@ https://norvi.io
 This example shows how to: 
 - Initialize and configure the EC-M12-BC-C6-C-B controller 
 - Read sensor data through the RS-485 Modbus interface 
-- Connect to the cellular network using the SIM7600 module 
-- Publish sensor values to an MQTT/ThingsBoard server 
+- Connect to the cellular network using the SIM7070 module 
 - Implement low-power operation using shutdown and wake-up control 
 
 ## What the User Should Do
